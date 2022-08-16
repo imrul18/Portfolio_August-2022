@@ -1,17 +1,7 @@
-import axios from "axios";
-import React, {  useEffect, useState } from "react";
+import React from "react";
 import Fade from "react-reveal";
 
-const About = () => {
-  const [data, setData] = useState();
-  const fetchData = async () => {
-    const res = await axios.get(`/aboutData`);
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+const About = ({data}) => {
 
   return (
     <section id="about">

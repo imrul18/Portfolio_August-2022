@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import moment from "moment";
 
@@ -6,17 +6,7 @@ import { toast } from "react-toastify";
 
 import { Fade, Slide } from "react-reveal";
 
-const Contact = () => {
-  const [data, setData] = useState();
-  const fetchData = async () => {
-    const res = await axios.get(`/contactData`);
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Contact = ({data}) => {
   const [message, setMessage] = useState({
     contactName: null,
     contactEmail: null,

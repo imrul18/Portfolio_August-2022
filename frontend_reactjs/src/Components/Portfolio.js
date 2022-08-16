@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Zmage from "react-zmage";
 import Fade from "react-reveal";
-import axios from "axios";
 
-const Portfolio = () => {
-  let id = 0;
 
-  const [data, setData] = useState();
-  const fetchData = async () => {
-    const res = await axios.get(`/projectData`);
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Portfolio = ({ data }) => {
   const projects = data?.map(function (projects) {
     let projectImage = projects.image;
 
     return (
       <div key={projects?.id} className="columns portfolio-item">
         <div className="item-wrap">
-          <Zmage alt={projects.title} src={projectImage} style={{height:140, width:220}}/>
+          <Zmage
+            alt={projects.title}
+            src={projectImage}
+            style={{ height: 140, width: 220 }}
+          />
           <div style={{ textAlign: "center" }}>{projects.title}</div>
         </div>
       </div>

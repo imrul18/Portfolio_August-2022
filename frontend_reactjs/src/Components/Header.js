@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios'
+import React from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 
-const Header = () => {
-  const [data,setData]= useState();
-  const fetchData = async () => {
-    const res = await axios.get(`/headerData`);
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Header = ({ data }) => {
+  console.log("Header", data);
   return (
     <header id="home">
       <ParticlesBg type="circle" bg={true} />
