@@ -4,8 +4,6 @@ import Fade from "react-reveal";
 import axios from "axios";
 
 const Portfolio = () => {
-  let id = 0;
-
   const [data, setData] = useState();
   const fetchData = async () => {
     const res = await axios.get(`/projectData`);
@@ -22,11 +20,7 @@ const Portfolio = () => {
     return (
       <div key={projects?.id} className="columns portfolio-item">
         <div className="item-wrap">
-          <Zmage
-            alt={projects.title}
-            src={projectImage}
-            className="image"
-          />
+          <Zmage alt={projects.title} src={projectImage} className="image" />
           <div style={{ textAlign: "center" }}>{projects.title}</div>
         </div>
       </div>

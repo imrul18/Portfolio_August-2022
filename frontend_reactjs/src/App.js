@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import ReactGA from "react-ga";
-import $ from "jquery";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -12,6 +10,7 @@ import axios from "axios";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "./Components/Loading";
 
 axios.defaults.baseURL = "http://api.imrul.xyz/api";
 
