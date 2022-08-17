@@ -1,7 +1,18 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Slide from "react-reveal";
 
-const Resume = ({ data }) => {
+const Resume = () => {
+  const [data, setData] = useState({});
+  const fetchData = async () => {
+    const res = await axios.get(`/resumeData`);
+    setData(res.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const getRandomColor = () => {
     let letters = "0123456789ABCDEF";
     let color = "#";

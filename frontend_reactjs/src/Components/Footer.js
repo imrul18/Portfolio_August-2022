@@ -1,7 +1,18 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Fade from "react-reveal";
 
-const Footer = ({ data }) => {
+const Footer = () => {
+  const [data, setData] = useState();
+  const fetchData = async () => {
+    const res = await axios.get(`/footerData`);
+    setData(res.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const networks = data?.map(function (network) {
     return (
       <li key={network.name}>

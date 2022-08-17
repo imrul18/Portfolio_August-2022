@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 
@@ -6,12 +6,22 @@ import { toast } from "react-toastify";
 
 import { Fade, Slide } from "react-reveal";
 
-const Contact = ({data}) => {
+const Contact = () => {
+  const [data, setData] = useState();
+  const fetchData = async () => {
+    const res = await axios.get(`/contactData`);
+    setData(res.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [message, setMessage] = useState({
-    contactName: null,
-    contactEmail: null,
-    contactSubject: null,
-    contactMessage: null,
+    contactName: "",
+    contactEmail: "",
+    contactSubject: "",
+    contactMessage: "",
   });
 
   const handleChange = (e) => {
@@ -23,17 +33,24 @@ const Contact = ({data}) => {
 
   const sendMail = async (e) => {
     e.preventDefault();
-    const res = await axios.post(`/sendMail`, message);
-    console.log(res);
-
-    document.getElementById("contactForm").reset();
-    setMessage({
-      contactName: null,
-      contactEmail: null,
-      contactSubject: null,
-      contactMessage: null,
-    });
-    toast.success("Sent Message Successfully 😊");
+    if (
+      message?.contactName.length < 1 ||
+      message?.contactEmail.length < 1 ||
+      message?.contactSubject.length < 1 ||
+      message?.contactMessage.length < 1
+    ) {
+      toast.error("Please fill all * fields 😊");
+    } else {
+      await axios.post(`/sendMail`, message);
+      document.getElementById("contactForm").reset();
+      setMessage({
+        contactName: "",
+        contactEmail: "",
+        contactSubject: "",
+        contactMessage: "",
+      });
+      toast.success("Sent Message Successfully 😊");
+    }
   };
 
   return (
@@ -86,7 +103,9 @@ const Contact = ({data}) => {
                 </div>
 
                 <div>
-                  <label htmlFor="contactSubject">Subject</label>
+                  <label htmlFor="contactSubject">
+                    Subject<span className="required">*</span>
+                  </label>
                   <input
                     type="text"
                     defaultValue=""
@@ -143,7 +162,7 @@ const Contact = ({data}) => {
 
             <div className="widget widget_tweets">
               <h4 className="widget-title">Latest Posts</h4>
-              <ul id="twitter">
+              <ul>
                 {data?.post?.map((posts) => {
                   return (
                     <li>
@@ -154,9 +173,10 @@ const Contact = ({data}) => {
                           {posts?.type}
                         </a>
                       </span>
+                      <br />
 
                       <b>
-                        <a>{moment(posts?.updated_at).fromNow()}</a>
+                        <p>{moment(posts?.updated_at).fromNow()}</p>
                       </b>
                     </li>
                   );
@@ -165,7 +185,6 @@ const Contact = ({data}) => {
             </div>
           </aside>
         </Slide>
-        {/* <ToastContainer /> */}
       </div>
     </section>
   );
